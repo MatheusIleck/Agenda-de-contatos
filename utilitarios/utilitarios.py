@@ -13,11 +13,10 @@ def menu(lista):
         print(f'\033[1;33m{c}\033[m - \033[1;35m{items}\033[m')
         c += 1
     print(linha())
-    opc = leiaInt('Sua opção:')
+    opc = leia_int('Sua opção:')
     return opc
 
-
-def leiaInt(msg):
+def leia_int(msg):
     while True:
         try:
             número = int(input(msg))
