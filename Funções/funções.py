@@ -9,7 +9,7 @@ def cria_contato(agenda):
 
         while continuar in 'S':
             nome = str(input('Digite o Nome: '))
-            numero = int(input('Digite o numero: '))
+            numero = leia_int('Digite o Numero: ')
             while len(str(numero)) > 11 or len(str(numero)) < 11:
                 numero = int(input('Por favor digite um numero valido: '))
             pessoa = Contato(nome, numero)

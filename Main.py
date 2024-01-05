@@ -16,9 +16,8 @@ while True:
         cria_contato(agenda)
     elif resp == 2:
         agenda.edita_contato()
-
     elif resp == 3:
-        print('Remover contato')
+        agenda.remove_contato()
     elif resp == 4:
         agenda.exibe_contato()
     elif resp == 5:

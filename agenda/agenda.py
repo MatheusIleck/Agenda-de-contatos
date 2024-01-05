@@ -44,16 +44,29 @@ class Agenda():
                 for i, contato in enumerate(self.contatos):
                     print(f'\033[1;32m{i}- Nome:\033[m {contato["nome"]:<30} \033[1;32mNumero: \033[m{contato["numero"]:>3}')
                     i+= 1
+        else:
+            print('Você não tem contatos')
 
     def edita_contato(self):
         if len(self.contatos) > 0:
                 for i, contato in enumerate(self.contatos):
                     print(f'\033[1;32m{i}- Nome:\033[m {contato["nome"]:<30} \033[1;32mNumero: \033[m{contato["numero"]:>3}')
                     i+= 1
-                    edita_contato = int(input('Qual contato você deseja editar?'))
-                    self.contatos[edita_contato]["nome"] = str(input('Digite o Nome: '))
-                    self.contatos[edita_contato]["numero"] = str(input('Digite o numero: '))
-                    Agenda.salva_contato(self)
+                edita_contato = int(input('Qual contato você deseja editar?'))
+                self.contatos[edita_contato]["nome"] = str(input('Digite o Nome: '))
+                self.contatos[edita_contato]["numero"] = str(input('Digite o numero: '))
+                Agenda.salva_contato(self)
         else:
             print(f'Você não tem contatos')
 
+    def remove_contato(self):
+        if len(self.contatos) > 0:
+            for i, contato in enumerate(self.contatos):
+                print(
+                    f'\033[1;32m{i}- Nome:\033[m {contato["nome"]:<30} \033[1;32mNumero: \033[m{contato["numero"]:>3}')
+                i += 1
+            remove_contato = int(input('Qual contato você deseja remover?'))
+            self.contatos.pop(remove_contato)
+            Agenda.salva_contato(self)
+        else:
+            print(f'Você não tem contatos')
