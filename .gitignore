@@ -1,1 +1,5 @@
 Agenda.pkl
+pyvenv.cfg
+Lib
+Scripts
+__init__.py

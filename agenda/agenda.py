@@ -1,5 +1,6 @@
 import pickle
 import os
+import re
 
 from utilitarios.utilitarios import cabecalho
 from Funções.funções import le_arquivo
@@ -53,6 +54,8 @@ class Agenda():
                     print(f'\033[1;32m{i}- Nome:\033[m {contato["nome"]:<30} \033[1;32mNumero: \033[m{contato["numero"]:>3}')
                     i+= 1
                 edita_contato = int(input('Qual contato você deseja editar?'))
+
+                #verificar se estão no padrão
                 self.contatos[edita_contato]["nome"] = str(input('Digite o Nome: '))
                 self.contatos[edita_contato]["numero"] = str(input('Digite o numero: '))
                 Agenda.salva_contato(self)
