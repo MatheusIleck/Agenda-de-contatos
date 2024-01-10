@@ -49,20 +49,29 @@ class Agenda():
             print('Você não tem contatos')
 
     def edita_contato(self):
+        padrao_nome = re.compile(r"^[A-Za-z]+(?:[^\S\r\n]+[A-Za-z]+)*$")
+        padrao_numero = re.compile(r"[0-9]{11}")
         if len(self.contatos) > 0:
                 for i, contato in enumerate(self.contatos):
                     print(f'\033[1;32m{i}- Nome:\033[m {contato["nome"]:<30} \033[1;32mNumero: \033[m{contato["numero"]:>3}')
                     i+= 1
                 edita_contato = int(input('Qual contato você deseja editar?'))
-
-                #verificar se estão no padrão
-                self.contatos[edita_contato]["nome"] = str(input('Digite o Nome: '))
-                self.contatos[edita_contato]["numero"] = str(input('Digite o numero: '))
-                Agenda.salva_contato(self)
+                while True:
+                    if edita_contato > len(self.contatos) - 1:
+                        print(f'Por favor Digite um valor valido')
+                    else:
+                        self.contatos[edita_contato]["nome"] = str(input('Digite o Nome: '))
+                        self.contatos[edita_contato]["numero"] = str(input('Digite o numero: '))
+                        if padrao_nome.match(self.contatos[edita_contato]["nome"]) and padrao_numero.match(self.contatos[edita_contato]["numero"]):
+                            Agenda.salva_contato(self)
+                            break
+                        else:
+                            print('Por favor digite valores validos')
         else:
             print(f'Você não tem contatos')
 
     def remove_contato(self):
+
         if len(self.contatos) > 0:
             for i, contato in enumerate(self.contatos):
                 print(
