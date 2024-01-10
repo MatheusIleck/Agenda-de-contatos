@@ -23,4 +23,5 @@ while True:
     elif resp == 5:
         break
     else:
-        print(f'Por favor digite um valor valido')
+        print('Por favor digite um valor valido')
+        resp = menu(['Adicionar Contato', 'Editar Contato', 'Remover Contato', 'Exibir agenda', 'Sair da Agenda'])

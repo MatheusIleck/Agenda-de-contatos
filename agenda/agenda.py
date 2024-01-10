@@ -50,23 +50,30 @@ class Agenda():
 
     def edita_contato(self):
         padrao_nome = re.compile(r"^[A-Za-z]+(?:[^\S\r\n]+[A-Za-z]+)*$")
-        padrao_numero = re.compile(r"[0-9]{11}")
+        padrao_numero = re.compile(r"[0-9]{11}$")
         if len(self.contatos) > 0:
                 for i, contato in enumerate(self.contatos):
                     print(f'\033[1;32m{i}- Nome:\033[m {contato["nome"]:<30} \033[1;32mNumero: \033[m{contato["numero"]:>3}')
                     i+= 1
-                edita_contato = int(input('Qual contato você deseja editar?'))
-                while True:
-                    if edita_contato > len(self.contatos) - 1:
-                        print(f'Por favor Digite um valor valido')
-                    else:
-                        self.contatos[edita_contato]["nome"] = str(input('Digite o Nome: '))
-                        self.contatos[edita_contato]["numero"] = str(input('Digite o numero: '))
-                        if padrao_nome.match(self.contatos[edita_contato]["nome"]) and padrao_numero.match(self.contatos[edita_contato]["numero"]):
-                            Agenda.salva_contato(self)
-                            break
+                try:
+                    edita_contato = int(input('Qual contato você deseja editar?'))
+                    while True:
+                        if edita_contato > len(self.contatos) - 1:
+                            edita_contato = int(input(f'\033[;31mPor favor Digite um valor valido: \033[m'))
                         else:
-                            print('Por favor digite valores validos')
+                            nome = str(input('Digite o nome: '))
+                            numero = str(input('Digite o numero: '))
+                            if padrao_nome.match(nome) and padrao_numero.match(numero):
+                                self.contatos[edita_contato]["nome"] = nome
+                                self.contatos[edita_contato]["numero"] = numero
+                                Agenda.salva_contato(self)
+                                break
+                            else:
+                                print('Por favor digite valores validos')
+                except (ValueError):
+                    print(f'\033[;31mO usuario digitou um valor invalido\033[m')
+                except KeyboardInterrupt:
+                    print(f'\033[;32mSaindo...\033[m')
         else:
             print(f'Você não tem contatos')
 
@@ -77,8 +84,18 @@ class Agenda():
                 print(
                     f'\033[1;32m{i}- Nome:\033[m {contato["nome"]:<30} \033[1;32mNumero: \033[m{contato["numero"]:>3}')
                 i += 1
-            remove_contato = int(input('Qual contato você deseja remover?'))
-            self.contatos.pop(remove_contato)
-            Agenda.salva_contato(self)
+            try:
+                remove_contato = int(input('Qual contato você deseja remover?'))
+                while True:
+                    if remove_contato > len(self.contatos) - 1:
+                        remove_contato = int(input(f'\033[;31mPor favor Digite um valor valido: \033[m'))
+                    else:
+                        self.contatos.pop(remove_contato)
+                        Agenda.salva_contato(self)
+                        break
+            except (ValueError):
+                print(f'\033[;31mPor favor digite um valor valido\033[m')
+            except KeyboardInterrupt:
+                print(f'\033[;32mSaindo...\033[m')
         else:
             print(f'Você não tem contatos')
