@@ -2,22 +2,16 @@ import pickle
 import os
 import re
 
-from utilitarios.utilitarios import cabecalho
-from Funções.funções import le_arquivo
+from funções.funções import cabecalho
 
 
 class Agenda():
     def __init__(self):
         self.contatos = list()
-        Agenda.cria_arquivo(self)
-        Agenda.verifica_agenda(self)
-    def adiciona_contato(self, Contato):
-        dados = dict()
-        dados = {'nome': Contato.nome, 'numero': Contato.numero}
-        self.contatos.append(dados)
-        self.salva_contato()
+        Agenda.criar_arquivo(self)
+        Agenda.verificar_agenda(self)
 
-    def cria_arquivo(self):
+    def criar_arquivo(self):
         import os
         caminho = "Agenda.pkl"
         if os.path.isfile(caminho):
@@ -26,31 +20,30 @@ class Agenda():
             with open("Agenda.pkl", "wb") as arquivo:
                 pickle.dump(self.contatos, arquivo)
 
-    def verifica_agenda(self):
+    def verificar_agenda(self):
         with open("Agenda.pkl", 'rb') as arquivo:
-            lista_contatos = pickle.load(arquivo)
-        if len(lista_contatos) > 0:
-            self.lista_contatos = le_arquivo(self)
-            self.contatos = lista_contatos
+            lista = pickle.load(arquivo)
+        if len(lista) > 0:
+           self.contatos = lista
         else:
             self.contatos = []
 
-    def salva_contato(self):
+    def salvar_contatos(self, contatos):
+        self.contatos.extend(contatos)
         with open("agenda.pkl", 'wb') as arquivo:
             pickle.dump(self.contatos, arquivo)
 
-    def exibe_contato(self):
+    def exibir_contatos(self):
         cabecalho('AGENDA')
-        if len(self.contatos) > 0:
-                for i, contato in enumerate(self.contatos):
-                    print(f'\033[1;32m{i}- Nome:\033[m {contato["nome"]:<30} \033[1;32mNumero: \033[m{contato["numero"]:>3}')
-                    i+= 1
+        with open("Agenda.pkl", 'rb') as arquivo:
+            lista = pickle.load(arquivo)
+        if len(lista)>0:
+            for i in range(len(lista)):
+                print(f'O nome é {lista[i]["nome"]}')
         else:
             print('Você não tem contatos')
-
-    def edita_contato(self):
-        padrao_nome = re.compile(r"^[A-Za-z]+(?:[^\S\r\n]+[A-Za-z]+)*$")
-        padrao_numero = re.compile(r"[0-9]{11}$")
+            
+    def editar_contatos(self):
         if len(self.contatos) > 0:
                 for i, contato in enumerate(self.contatos):
                     print(f'\033[1;32m{i}- Nome:\033[m {contato["nome"]:<30} \033[1;32mNumero: \033[m{contato["numero"]:>3}')
@@ -63,13 +56,8 @@ class Agenda():
                         else:
                             nome = str(input('Digite o nome: '))
                             numero = str(input('Digite o numero: '))
-                            if padrao_nome.match(nome) and padrao_numero.match(numero):
-                                self.contatos[edita_contato]["nome"] = nome
-                                self.contatos[edita_contato]["numero"] = numero
-                                Agenda.salva_contato(self)
-                                break
-                            else:
-                                print('Por favor digite valores validos')
+                            Agenda.salvar_contatos(self)
+                            break
                 except (ValueError):
                     print(f'\033[;31mO usuario digitou um valor invalido\033[m')
                 except KeyboardInterrupt:
@@ -77,7 +65,7 @@ class Agenda():
         else:
             print(f'Você não tem contatos')
 
-    def remove_contato(self):
+    def remover_contatos(self):
 
         if len(self.contatos) > 0:
             for i, contato in enumerate(self.contatos):
@@ -91,7 +79,7 @@ class Agenda():
                         remove_contato = int(input(f'\033[;31mPor favor Digite um valor valido: \033[m'))
                     else:
                         self.contatos.pop(remove_contato)
-                        Agenda.salva_contato(self)
+                        Agenda.salvar_contato(self)
                         break
             except (ValueError):
                 print(f'\033[;31mPor favor digite um valor valido\033[m')

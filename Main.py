@@ -1,27 +1,12 @@
-import pickle
+import sys
+
+from interface.interface import interface
+from funções.funções import leia_int
 
 
-from utilitarios.utilitarios import menu
-from contatos.contato import Contato
-from agenda.agenda import Agenda
-from Funções.funções import cria_contato
-
-
-agenda = Agenda()
-agenda.cria_arquivo()
+nova_interface = interface
 
 while True:
-    resp = menu(['Adicionar Contato', 'Editar Contato', 'Remover Contato', 'Exibir agenda', 'Sair da Agenda'])
-    if resp == 1:
-        cria_contato(agenda)
-    elif resp == 2:
-        agenda.edita_contato()
-    elif resp == 3:
-        agenda.remove_contato()
-    elif resp == 4:
-        agenda.exibe_contato()
-    elif resp == 5:
-        break
-    else:
-        print('Por favor digite um valor valido')
-        resp = menu(['Adicionar Contato', 'Editar Contato', 'Remover Contato', 'Exibir agenda', 'Sair da Agenda'])
+   nova_interface.mostrar_comandos()
+   resposta = leia_int('Digite a opção: ')
+   nova_interface.executar_comando(resposta)
