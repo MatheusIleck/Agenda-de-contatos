@@ -3,3 +3,4 @@ pyvenv.cfg
 Lib
 Scripts
 __init__.py
+__pycache__

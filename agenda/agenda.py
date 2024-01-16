@@ -2,7 +2,7 @@ import pickle
 import os
 import re
 
-from funções.funções import cabecalho
+from funções.funções import cabecalho, linha, sanitizar_nome, sanitizar_numero
 
 
 class Agenda():
@@ -28,62 +28,54 @@ class Agenda():
         else:
             self.contatos = []
 
-    def salvar_contatos(self, contatos):
-        self.contatos.extend(contatos)
-        with open("agenda.pkl", 'wb') as arquivo:
-            pickle.dump(self.contatos, arquivo)
+    def salvar_contatos(self, contatos=None):
+        if contatos == None:
+            with open("agenda.pkl", 'wb') as arquivo:
+                pickle.dump(self.contatos, arquivo)
+        else:
+            self.contatos.extend(contatos)
+            with open("agenda.pkl", 'wb') as arquivo:
+                    pickle.dump(self.contatos, arquivo)
+        
 
     def exibir_contatos(self):
         cabecalho('AGENDA')
         with open("Agenda.pkl", 'rb') as arquivo:
             lista = pickle.load(arquivo)
-        if len(lista)>0:
-            for i in range(len(lista)):
-                print(f'O nome é {lista[i]["nome"]}')
+        if len(lista) > 0:
+            for i, contato in enumerate(lista):
+                print(f'\033[1;32m{i}- Nome:\033[m {contato["nome"]:<30} \033[1;32mNumero: \033[m{contato["numero"]:>3}')
+                i+= 1
         else:
-            print('Você não tem contatos')
+            print('Você não tem contatos.')
             
     def editar_contatos(self):
-        if len(self.contatos) > 0:
-                for i, contato in enumerate(self.contatos):
-                    print(f'\033[1;32m{i}- Nome:\033[m {contato["nome"]:<30} \033[1;32mNumero: \033[m{contato["numero"]:>3}')
-                    i+= 1
-                try:
-                    edita_contato = int(input('Qual contato você deseja editar?'))
-                    while True:
-                        if edita_contato > len(self.contatos) - 1:
-                            edita_contato = int(input(f'\033[;31mPor favor Digite um valor valido: \033[m'))
-                        else:
-                            nome = str(input('Digite o nome: '))
-                            numero = str(input('Digite o numero: '))
-                            Agenda.salvar_contatos(self)
-                            break
-                except (ValueError):
-                    print(f'\033[;31mO usuario digitou um valor invalido\033[m')
-                except KeyboardInterrupt:
-                    print(f'\033[;32mSaindo...\033[m')
-        else:
-            print(f'Você não tem contatos')
-
-    def remover_contatos(self):
-
-        if len(self.contatos) > 0:
-            for i, contato in enumerate(self.contatos):
-                print(
-                    f'\033[1;32m{i}- Nome:\033[m {contato["nome"]:<30} \033[1;32mNumero: \033[m{contato["numero"]:>3}')
-                i += 1
             try:
-                remove_contato = int(input('Qual contato você deseja remover?'))
+                linha()
+                edita_contato = int(input('Qual contato você deseja editar?'))
                 while True:
-                    if remove_contato > len(self.contatos) - 1:
-                        remove_contato = int(input(f'\033[;31mPor favor Digite um valor valido: \033[m'))
+                    if edita_contato > len(self.contatos) - 1:
+                        edita_contato = int(input(f'\033[;31mPor favor Digite um valor valido: \033[m'))
                     else:
-                        self.contatos.pop(remove_contato)
-                        Agenda.salvar_contato(self)
+                        nome = sanitizar_nome('Digite o Nome: ')
+                        numero = sanitizar_numero('Digite o Número: ')
+                        self.contatos[edita_contato]["nome"] = nome
+                        self.contatos[edita_contato]["numero"] = numero
                         break
             except (ValueError):
-                print(f'\033[;31mPor favor digite um valor valido\033[m')
+                print(f'\033[;31mO usuario digitou um valor invalido\033[m')
             except KeyboardInterrupt:
                 print(f'\033[;32mSaindo...\033[m')
-        else:
-            print(f'Você não tem contatos')
+
+    def remover_contatos(self):
+        linha()
+        remove_contato = int(input('Qual contato você deseja remover?'))
+        linha()
+        while True:
+            if remove_contato > len(self.contatos) - 1:
+                remove_contato = int(input(f'\033[;31mPor favor Digite um valor valido: \033[m'))
+            else:
+                print(f'\033[;32mContato removido!\033[m')
+                self.contatos.pop(remove_contato)
+                break
+   
