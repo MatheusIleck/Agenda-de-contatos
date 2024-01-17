@@ -1,6 +1,6 @@
 from agenda.agenda import Agenda
 from contatos.contato import Contato
-from funções import funções
+from funcoes import funções
 
 agenda = Agenda()
 

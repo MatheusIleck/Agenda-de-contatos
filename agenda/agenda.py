@@ -2,7 +2,7 @@ import pickle
 import os
 import re
 
-from funções.funções import cabecalho, linha, sanitizar_nome, sanitizar_numero
+from funcoes.funções import cabecalho, linha, sanitizar_nome, sanitizar_numero
 
 
 class Agenda():
