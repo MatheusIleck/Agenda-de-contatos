@@ -51,28 +51,17 @@ class Agenda():
              print(f'\033[;31mVocê não tem contatos.\033[m')
              
     def editar_contatos(self, contato_escolhido, nome, numero):
-            self.contatos[contato_escolhido]["nome"] = nome
-            self.contatos[contato_escolhido]["numero"] = numero
-            print(f'\033[;32mContato Atualizado\033[m')
+        self.contatos[contato_escolhido]["nome"] = nome
+        self.contatos[contato_escolhido]["numero"] = numero
+        print(f'\033[;32mContato Atualizado.\033[m')
                            
-    def remover_contatos(self):
-        if len(self.contatos) <= 0:
-                    pass
-        else:
-            linha()
-            remove_contato = int(input('Qual contato você deseja remover?'))
-            linha()
-            while True:
-                if remove_contato > len(self.contatos) - 1:
-                    remove_contato = int(input(f'\033[;31mPor favor Digite um valor valido: \033[m'))
-                else:
-                    print(f'\033[;32mContato removido!\033[m')
-                    self.contatos.pop(remove_contato)
-                    break
+    def remover_contatos(self, remove_contato):
+        self.contatos.pop(remove_contato)
+        
     
     def encontrar_contato(self, numero):
-        contato_escolhido = self.contatos[numero]
-        print(contato_escolhido)
+        numero = self.contatos[numero]
+        return numero
    
     def pegar_contatos(self):
         return self.contatos

@@ -1,4 +1,3 @@
-
 from interface.interface import interface
 from funções.funções import leia_int
 
