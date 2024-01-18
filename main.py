@@ -1,5 +1,5 @@
 from interface.interface import interface
-from funcoes.funções import leia_int
+from funcoes.funcoes import leia_int
 
 
 nova_interface = interface

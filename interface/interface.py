@@ -1,6 +1,6 @@
 from agenda.agenda import Agenda
 from contatos.contato import Contato
-from funcoes import funções
+from funcoes import funcoes
 
 agenda = Agenda()
 
@@ -11,7 +11,7 @@ class interface():
 
 
     def mostrar_comandos():
-        funções.menu(['Adicionar Contato', 'Editar Contato', 'Remover Contato', 'Exibir agenda', 'Sair da Agenda'])
+        funcoes.menu(['Adicionar Contato', 'Editar Contato', 'Remover Contato', 'Exibir Agenda', 'Sair da Agenda'])
         
     def executar_comando(resposta):
         if resposta == 1:
@@ -22,29 +22,51 @@ class interface():
         if resposta == 2:
             esperando_por_input = False
             try:
+                #exibe os contatos
                 agenda.exibir_contatos()
+                
+                #pega a lista de contatos
                 contatos = agenda.pegar_contatos()
+                
+                #verifica se existe items na lista
                 if len(contatos) > 0:
                     esperando_por_input = True
+                    
                 while esperando_por_input == True:
-                    funções.linha()
+                    funcoes.linha()
+                    
+                    #pergunta ao usuario qual contato ele deseja editar
                     index_contato = int(input('Qual contato você deseja editar?'))
+                    
+                    #recebe o contato escolhido
                     contato_escolhido = agenda.encontrar_contato(index_contato)
+                    
+                    #verifica se existe o usuario na lista de contatos
                     if contato_escolhido in contatos:
-                        nome = funções.sanitizar_nome('Digite o Nome: ')
-                        numero = funções.sanitizar_numero('Digite o Numero: ')
-                        agenda.editar_contatos(index_contato, nome, numero)
+                        escolher_campo_edicao_contato = int(input('O que você deseja editar? (0 para editar o nome e 1 para editar o número): '))
+                        if escolher_campo_edicao_contato == 0:
+                            contato_escolhido["nome"] = funcoes.sanitizar_nome('Digite o Nome: ')
+                            
+                           
+                        elif escolher_campo_edicao_contato == 1:
+                            contato_escolhido["numero"] = funcoes.sanitizar_numero('Digite o Número: ')
+                            
+                        else:
+                            print(f'\033[;31mPor favor digite um valor válido.\033[m')  
+                        
+                        agenda.editar_contatos(index_contato, contato_escolhido)
                         agenda.salvar_contatos()
+                           
                         esperando_por_input = False
                         
             except(KeyboardInterrupt):
                 print(f'\033[32mSaindo...\033[m')
             
-            except(ValueError,TypeError):
+            '''except(ValueError,TypeError):
                 print(f'\033[;31mPor favor digite um valor válido.\033[m')
             
             except(IndexError):
-                print(f'\033[;31mPor favor digite um valor válido.\033[m')
+                print(f'\033[;31mPor favor digite um valor válido.\033[m')'''
         
         
         if resposta == 3:
@@ -55,7 +77,7 @@ class interface():
                 if len(contatos) > 0:
                     esperando_por_input = True
                 while esperando_por_input == True:
-                    funções.linha()
+                    funcoes.linha()
                     index_contato = int(input('Qual contato você deseja remover?'))
                     contato_escolhido = agenda.encontrar_contato(index_contato)
                     if contato_escolhido in contatos:    
@@ -77,5 +99,9 @@ class interface():
         if resposta == 5:
             print(f'\033[;32mSaindo...\033[m')
             quit()
+            
+        else:
+            funcoes.linha()
+            print(f'\033[;31mPor favor digite um valor válido.\033[m')
             
     

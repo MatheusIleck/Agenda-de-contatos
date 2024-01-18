@@ -1,8 +1,7 @@
 import pickle
-import os
 import re
 
-from funcoes.funções import cabecalho, linha, sanitizar_nome, sanitizar_numero
+from funcoes.funcoes import cabecalho, linha, sanitizar_nome, sanitizar_numero
 
 
 class Agenda():
@@ -45,14 +44,14 @@ class Agenda():
             lista = pickle.load(arquivo)
         if len(lista) > 0:
             for i, contato in enumerate(lista):
-                print(f'\033[1;32m{i}- Nome:\033[m {contato["nome"]:<30} \033[1;32mNumero: \033[m{contato["numero"]:>3}')
+                print(f'\033[1;32m{i}- Nome:\033[m {contato["nome"]:<30} \033[1;32mNúmero: \033[m{contato["numero"]:>3}')
                 i+= 1  
         else:
              print(f'\033[;31mVocê não tem contatos.\033[m')
              
-    def editar_contatos(self, contato_escolhido, nome, numero):
-        self.contatos[contato_escolhido]["nome"] = nome
-        self.contatos[contato_escolhido]["numero"] = numero
+    def editar_contatos(self, index_contato, contato_escolhido):
+        self.contatos[index_contato]["nome"] = contato_escolhido["nome"]
+        self.contatos[index_contato]["numero"] = contato_escolhido["numero"]
         print(f'\033[;32mContato Atualizado.\033[m')
                            
     def remover_contatos(self, remove_contato):

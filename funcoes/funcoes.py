@@ -23,7 +23,7 @@ def leia_int(msg):
         try:
             número = int(input(msg))
         except ValueError:
-            print('\033[0;31mErro, por favor digite um número Valido. \033[m')
+            print('\033[0;31mErro, por favor digite um número válido. \033[m')
         except KeyboardInterrupt:
             print("\033[;32mSaindo...\033[m")
             exit()
@@ -35,7 +35,7 @@ def sanitizar_nome(msg):
     nome = str(input(msg))
     
     while not padrao_nome.match(nome):
-        print('\033[;31mERRO: Dados invalidos\033[m')
+        print('\033[;31mERRO: Dados inválidos\033[m')
         nome = str(input('Digite o Nome: '))
     else:
         return nome

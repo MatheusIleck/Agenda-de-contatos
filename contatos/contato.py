@@ -1,8 +1,8 @@
 import re
 
 from agenda.agenda import Agenda
-from funcoes.funções import sanitizar_nome
-from funcoes.funções import sanitizar_numero
+from funcoes.funcoes import sanitizar_nome
+from funcoes.funcoes import sanitizar_numero
 
 
 class Contato():
@@ -26,9 +26,9 @@ class Contato():
                 contatos.append(dados)
                 
                 
-                continuar = input("Deseja continuar?").upper()
+                continuar = input("Deseja adicionar outro contato? ").upper()
                 while continuar not in 'SsNn':
-                    continuar = str(input('Por favor digite um valor valido: ')).upper()
+                    continuar = str(input('Por favor digite um valor válido: ')).upper()
                     
                 if continuar in 'N':
                     return contatos
