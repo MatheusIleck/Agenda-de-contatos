@@ -6,20 +6,27 @@ agenda = Agenda()
 
 class interface():
     def __init__(self, agenda, Contato):
-        agenda.criar_arquivo()
         lista = agenda.verificar_agenda()
 
 
     def mostrar_comandos():
-        funcoes.menu(['Adicionar Contato', 'Editar Contato', 'Remover Contato', 'Exibir Agenda', 'Sair da Agenda'])
+        funcoes.menu(['Criar Agenda','Exibir Agendas', 'Adicionar Contato', 'Editar Contato', 'Remover Contato', 'Exibir Agenda', 'Sair da Agenda'])
         
     def executar_comando(resposta):
+        
         if resposta == 1:
+            funcoes.linha()
+            nova_agenda = str(input('Digite o nome da agenda que deseja criar: '))
+            agenda.criar_agenda(nova_agenda)
+        
+        elif resposta == 2:
+            Agenda.teste()
+        
+        elif resposta == 3:
             lista_contatos = Contato.criar_contatos()
             agenda.salvar_contatos(lista_contatos)
             
-            
-        if resposta == 2:
+        elif resposta == 4:
             esperando_por_input = False
             try:
                 #exibe os contatos
@@ -68,8 +75,7 @@ class interface():
             except(IndexError):
                 print(f'\033[;31mPor favor digite um valor válido.\033[m')'''
         
-        
-        if resposta == 3:
+        elif resposta == 5:
             esperando_por_input = False
             try:
                 agenda.exibir_contatos()
@@ -92,16 +98,13 @@ class interface():
             except(IndexError):
                 print(f'\033[;31mPor favor digite um valor válido.\033[m')
         
-        if resposta == 4:
+        elif resposta == 6:
             agenda.exibir_contatos()
         
-        
-        if resposta == 5:
+        elif resposta == 7:
             print(f'\033[;32mSaindo...\033[m')
-            quit()
-            
+            quit() 
         else:
             funcoes.linha()
             print(f'\033[;31mPor favor digite um valor válido.\033[m')
             
-    
