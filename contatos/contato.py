@@ -1,8 +1,8 @@
 import re
 
 from agenda.agenda import Agenda
-from funcoes.funcoes import sanitizar_nome
-from funcoes.funcoes import sanitizar_numero
+from interface.funcoes import sanitizar_nome
+from interface.funcoes import sanitizar_numero
 
 
 class Contato():
