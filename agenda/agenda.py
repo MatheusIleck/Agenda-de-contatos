@@ -13,47 +13,51 @@ class Agenda():
         caminho = 'lista_de_agendas/'
         with open(caminho + agenda, 'rb') as arquivo:
             lista = pickle.load(arquivo)
-        if len(lista) > 0:
-           self.contatos = lista
-           return self.contatos
+        if isinstance(lista, list):
+            if len(lista) > 0:
+                self.contatos = lista
+                return self.contatos
+            else:
+                self.contatos.extend(lista)
+                return self.contatos
         else:
-            self.contatos = []
-            return self.contatos
+            agenda = self.contatos
+            return agenda
 
-    def salvar_contatos(self, contatos=None,):
-        if contatos == None:
-            with open("agenda.pkl", 'wb') as arquivo:
+    def salvar_contatos(self, agenda_selecionada, contatos=None, ):
+        caminho = 'lista_de_agendas/'
+        if agenda_selecionada == None:
+            with open(caminho + agenda_selecionada, 'wb') as arquivo:
                 pickle.dump(self.contatos, arquivo)
         else:
             self.contatos.extend(contatos)
-            with open("agenda.pkl", 'wb') as arquivo:
+            with open(caminho + agenda_selecionada, 'wb') as arquivo:
                     pickle.dump(self.contatos, arquivo)
 
-    def exibir_contatos(self):
+    def exibir_contatos(self, agenda_atual):
+        caminho = "lista_de_agendas/"
         cabecalho('AGENDA')
-        with open("lista_de_agendas\Agenda.pkl", 'rb') as arquivo:
+        with open(caminho + agenda_atual , 'rb') as arquivo:
             lista = pickle.load(arquivo)
-        if len(lista) > 0:
+        print(lista)
+        '''if len(lista) > 0:
             for i, contato in enumerate(lista):
                 print(f'\033[1;32m{i}- Nome:\033[m {contato["nome"]:<30} \033[1;32mNúmero: \033[m{contato["numero"]:>3}')
                 i+= 1  
         else:
-             print(f'\033[;31mVocê não tem contatos.\033[m')
+             print(f'\033[;31mVocê não tem contatos.\033[m')'''
              
-    def editar_contatos(self, index_contato, contato_escolhido):
-        self.contatos[index_contato]["nome"] = contato_escolhido["nome"]
-        self.contatos[index_contato]["numero"] = contato_escolhido["numero"]
+    def editar_contatos(self, index_contato, contato_escolhido, contatos):
+        contatos[index_contato]["nome"] = contato_escolhido["nome"]
+        contatos[index_contato]["numero"] = contato_escolhido["numero"]
         print(f'\033[;32mContato Atualizado.\033[m')
                            
     def remover_contatos(self, remove_contato):
         self.contatos.pop(remove_contato)
         
-    
-    def encontrar_contato(self, numero):
-        numero = self.contatos[numero]
-        return numero
-   
-    def pegar_contatos(self):
-        return self.contatos
+    def pegar_contatos(self, agenda_atual):
+         with open("lista_de_agendas/" + agenda_atual , 'rb') as arquivo:
+            lista = pickle.load(arquivo)
+            return lista
 
         

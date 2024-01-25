@@ -12,23 +12,30 @@ def cabecalho(txt):
     linha()
 
 def menu():
-    menu = [{'comando_principal':'Criar Agenda'},
-                      {'comando_principal':'Listar Agendas existentes',
-                       'sub_comandos':[{"nome":"Selecionar Agenda", 'subsubmenu':[{'nome':'Adicionar Contato'},
-                                                                                  {'nome':'Editar Contato'},
-                                                                                  {'nome':'Remover Contato'},
-                                                                                  {'nome':'Exibir Contatos'},
-                                                                                  {'nome':'Voltar'}]},
-                                       {"nome":"Editar Agenda"},
-                                       {"nome":"Deletar Agenda"},
-                                       {"nome":"Voltar"}
-                        
-                    ]},{'comando_principal':'Sair'}]
+    menu = [
+    {'comando_principal': 'Criar Agenda'},
+    {'comando_principal': 'Listar Agendas existentes',
+     'sub_comandos': [
+         {"nome": "Selecionar Agenda",
+          'sub_comandos': [
+              {'nome': 'Adicionar Contato'},
+              {'nome': 'Editar Contato'},
+              {'nome': 'Remover Contato'},
+              {'nome': 'Exibir Contatos'},
+              {'nome': 'Voltar'}
+          ]},
+         {"nome": "Editar Agenda"},
+         {"nome": "Deletar Agenda"},
+         {"nome": "Voltar"}
+     ]},
+    {'comando_principal': 'Sair'}
+]
+
     return menu
 
 def selecionar_submenu(resposta, menu):
-    submenu = menu[resposta - 1].get('sub_comandos')
-    return submenu
+    novo_menu = menu[resposta - 1].get('sub_comandos')
+    return novo_menu
     
 def leia_int(msg):
     while True:
@@ -65,7 +72,7 @@ def criar_agenda(nova_agenda):
         try:
             import os
             #define o caminho
-            caminho = 'lista_de_agendas'
+            caminho = 'lista_de_agendas/'
             
             #verifica se o diretorio 'lista_de_agendas' não existe
             if not os.path.exists(caminho):
@@ -74,7 +81,7 @@ def criar_agenda(nova_agenda):
                 os.makedirs(caminho)
                 
             #Define o caminho aonde eu quero salvar o arquivo, juntando a pasta com o nome do arquivo que o usuario escolheu    
-            caminho_do_arquivo = os.path.join(caminho, nova_agenda +'.pkl')
+            caminho_do_arquivo = os.path.join(caminho, nova_agenda)
             
             if os.path.isfile(caminho_do_arquivo):
                 print(f'\033[;31mErro: Ja existe uma agenda com esse nome!\033[m')
@@ -93,3 +100,5 @@ def selecionar_agendas():
     caminho_do_diretorio = 'lista_de_agendas'
     arquivos = os.listdir(caminho_do_diretorio)
     return arquivos
+
+    
