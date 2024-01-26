@@ -1,4 +1,5 @@
 import os
+import glob
 
 from agenda.agenda import Agenda
 from contatos.contato import Contato
@@ -45,24 +46,54 @@ class Interface():
             print(f'\033[;31mPor favor digite um valor válido.\033[m')
         
     def executar_comando_submenu(agenda_selecionada, resposta_submenu, situacao_atual):
-        
+        #pega o diretorio das agendas
         diretorio_agendas = funcoes.selecionar_agendas()
         
+        #enquanto situação atual estiver em "listar agendas existentes"
         while situacao_atual in 'Listar Agendas existentes':
+            
+            #Se a resposta do usuario é igual a 1
             if resposta_submenu == 1:
-                selecionar_agenda = str(input('Digite o nome da agenda que deseja selecionar: ')) + '.pkl'    
+              
+                #pede o nome da agenda ao usuario  
+                selecionar_agenda = str(input('Digite o nome da agenda que deseja selecionar: ')) + '.pkl'   
+                
+                #verifica se existe uma agenda com esse nome dentro do diretorio de agendas 
                 if selecionar_agenda in diretorio_agendas:
                     agenda_selecionada = False
                     return selecionar_agenda
                     
             elif resposta_submenu == 2:
+                funcoes.linha()
                 selecionar_agenda = str(input('Digite o nome da agenda que deseja editar: ')) + '.pkl'
                 
                 if selecionar_agenda in diretorio_agendas:
                     novo_nome_agenda = str(input('Digite o novo nome da agenda: ')) + '.pkl'
-                    os.rename("lista_de_agendas/" + selecionar_agenda, "lista_de_agendas/" +novo_nome_agenda)
-                    break
+                    os.rename("lista_de_agendas/" + selecionar_agenda, "lista_de_agendas/" +novo_nome_agenda)  
+                    funcoes.linha()
+                       
+                    agenda_selecionada = False
+                    return 'agenda não selecionada'
+                     
+            elif resposta_submenu == 3:
+                
+                caminho_do_diretorio = 'lista_de_agendas/'
+                agenda = glob.glob("./lista_de_agendas/*.pkl")
+            
+                if agenda:
+                    try:
+                        selecionar_agenda = str(input('Digite o nome da agenda que deseja remover: ')) + '.pkl'
+                        os.unlink(caminho_do_diretorio + selecionar_agenda)
+                        print(f'\033[0;32mAgenda removida!\033[m')
+                        return ''
+                    except FileNotFoundError:
+                        print('Essa agenda não existe.')
                     
+                else:
+                    funcoes.linha()
+                    print('\033[0;31mNão existem agendas \033[m')
+                    
+                return ''
             else:
                 print('Por favor digite um valor válido')
                 break
