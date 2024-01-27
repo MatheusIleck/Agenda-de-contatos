@@ -22,15 +22,16 @@ class Agenda():
                 return self.contatos
         else:
             agenda = self.contatos
-            return agenda
+            return self.contatos
 
-    def salvar_contatos(self, agenda_selecionada, contatos=None, ):
+    def salvar_contatos(self, agenda_selecionada, contatos=None,):
         caminho = 'lista_de_agendas/'
-        if agenda_selecionada == None:
+        if contatos == None:
             with open(caminho + agenda_selecionada, 'wb') as arquivo:
                 pickle.dump(self.contatos, arquivo)
+
+                print(f'self contatos: {self.contatos}' )
         else:
-            self.contatos.extend(contatos)
             with open(caminho + agenda_selecionada, 'wb') as arquivo:
                     pickle.dump(self.contatos, arquivo)
 
@@ -50,7 +51,10 @@ class Agenda():
     def editar_contatos(self, index_contato, contato_escolhido, contatos):
         contatos[index_contato]["nome"] = contato_escolhido["nome"]
         contatos[index_contato]["numero"] = contato_escolhido["numero"]
+        self.contatos = contatos
         print(f'\033[;32mContato Atualizado.\033[m')
+        
+        return self.contatos
                            
     def remover_contatos(self, remove_contato):
         self.contatos.pop(remove_contato)

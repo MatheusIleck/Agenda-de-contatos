@@ -35,8 +35,13 @@ class Interface():
             
         
         elif resposta == 2:
-            Interface.exibir_agendas()
-           
+            lista_de_agenda = glob.glob("./lista_de_agendas/*.pkl")
+            if lista_de_agenda:
+                Interface.exibir_agendas()
+                return 'agendas listadas'
+            else:
+                print(f'\033[;31mVocê não tem agendas.\033[m')
+                return 'sem agendas'
 
         elif resposta == 3:
             print(f'\033[;32mSaindo...\033[m')
@@ -45,12 +50,11 @@ class Interface():
             funcoes.linha()
             print(f'\033[;31mPor favor digite um valor válido.\033[m')
         
-    def executar_comando_submenu(agenda_selecionada, resposta_submenu, situacao_atual):
+    def executar_comando_submenu(situacao_atual, resposta_submenu, agenda_selecionada, entrar_na_agenda):
         #pega o diretorio das agendas
         diretorio_agendas = funcoes.selecionar_agendas()
-        
         #enquanto situação atual estiver em "listar agendas existentes"
-        while situacao_atual in 'Listar Agendas existentes':
+        while entrar_na_agenda:
             
             #Se a resposta do usuario é igual a 1
             if resposta_submenu == 1:
@@ -60,7 +64,7 @@ class Interface():
                 
                 #verifica se existe uma agenda com esse nome dentro do diretorio de agendas 
                 if selecionar_agenda in diretorio_agendas:
-                    agenda_selecionada = False
+                    situacao_atual = 'agenda selecionada'
                     return selecionar_agenda
                     
             elif resposta_submenu == 2:
@@ -78,9 +82,9 @@ class Interface():
             elif resposta_submenu == 3:
                 
                 caminho_do_diretorio = 'lista_de_agendas/'
-                agenda = glob.glob("./lista_de_agendas/*.pkl")
+                lista_de_agenda = glob.glob("./lista_de_agendas/*.pkl")
             
-                if agenda:
+                if lista_de_agenda:
                     try:
                         selecionar_agenda = str(input('Digite o nome da agenda que deseja remover: ')) + '.pkl'
                         os.unlink(caminho_do_diretorio + selecionar_agenda)
@@ -104,30 +108,27 @@ class Interface():
                     funcoes.linha()
                     lista_contatos = Contato.criar_contatos()
                     funcoes.linha()
-                    agenda.verificar_agenda(agenda_selecionada)
-                    agenda.salvar_contatos(agenda_selecionada,lista_contatos)
+                    contatos_existentes = agenda.verificar_agenda(agenda_selecionada)
+                    contatos_existentes.extend(lista_contatos)
+                    agenda.salvar_contatos(agenda_selecionada, contatos_existentes)
                     
                     break
             
-                elif resposta_submenu == 2:
-                    esperando_por_input = False
-                    
-                    #exibe os contatos
+                elif resposta_submenu == 2: 
+                    #exibe os contatos                    
                     agenda.exibir_contatos(agenda_selecionada)
                     
                     #pega a lista de contatos
                     contatos = agenda.pegar_contatos(agenda_selecionada)
                     
                     #verifica se existe items na lista
-                    if len(contatos) > 0:
-                        esperando_por_input = True
                     
-                    while esperando_por_input == True:
+                    if  len(contatos) > 0:
                         funcoes.linha()
-                    
+                        
                         #pergunta ao usuario qual contato ele deseja editar
                         index_contato = int(input('Qual contato você deseja editar?'))
-                    
+                        
                         #recebe o contato escolhido
                         contato_escolhido = contatos[index_contato]
                     
@@ -136,19 +137,21 @@ class Interface():
                             escolher_campo_edicao_contato = int(input('O que você deseja editar? (0 para editar o nome e 1 para editar o número): '))
                             if escolher_campo_edicao_contato == 0:
                                 contato_escolhido["nome"] = funcoes.sanitizar_nome('Digite o Nome: ')
+                                    
                                 
-                            
                             elif escolher_campo_edicao_contato == 1:
                                 contato_escolhido["numero"] = funcoes.sanitizar_numero('Digite o Número: ')
-                                
+                                    
                             else:
                                 print(f'\033[;31mPor favor digite um valor válido.\033[m')  
-                            
-                            agenda.editar_contatos(index_contato, contato_escolhido, contatos)
-                            agenda.salvar_contatos(agenda_selecionada)
-                            
-                            esperando_por_input = False
-                        
+                                
+                            contatos_atualizados = agenda.editar_contatos(index_contato, contato_escolhido, contatos)
+                            agenda.salvar_contatos(agenda_selecionada, contatos_atualizados)
+                            break
+                    else:
+                        print('você não tem contatos')
+                        break
+                    
             except(KeyboardInterrupt):
                 print(f'\033[32mSaindo...\033[m')
         
