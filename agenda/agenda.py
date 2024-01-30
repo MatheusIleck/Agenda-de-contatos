@@ -30,7 +30,6 @@ class Agenda():
             with open(caminho + agenda_selecionada, 'wb') as arquivo:
                 pickle.dump(self.contatos, arquivo)
 
-                print(f'self contatos: {self.contatos}' )
         else:
             with open(caminho + agenda_selecionada, 'wb') as arquivo:
                     pickle.dump(self.contatos, arquivo)
@@ -40,13 +39,13 @@ class Agenda():
         cabecalho('AGENDA')
         with open(caminho + agenda_atual , 'rb') as arquivo:
             lista = pickle.load(arquivo)
-        print(lista)
-        '''if len(lista) > 0:
+        
+        if isinstance(lista, list) and len(lista) > 0:
             for i, contato in enumerate(lista):
-                print(f'\033[1;32m{i}- Nome:\033[m {contato["nome"]:<30} \033[1;32mNúmero: \033[m{contato["numero"]:>3}')
+                print(f'\033[1;32m{i}- Nome:\033[m {contato}')
                 i+= 1  
         else:
-             print(f'\033[;31mVocê não tem contatos.\033[m')'''
+             print(f'\033[;31mVocê não tem contatos.\033[m')
              
     def editar_contatos(self, index_contato, contato_escolhido, contatos):
         contatos[index_contato]["nome"] = contato_escolhido["nome"]
@@ -56,9 +55,11 @@ class Agenda():
         
         return self.contatos
                            
-    def remover_contatos(self, remove_contato):
-        self.contatos.pop(remove_contato)
-        
+    def remover_contatos(self, contatos_existentes, index_contato):
+        contatos_existentes.pop(index_contato)
+        self.contatos = contatos_existentes
+        return self.contatos
+            
     def pegar_contatos(self, agenda_atual):
          with open("lista_de_agendas/" + agenda_atual , 'rb') as arquivo:
             lista = pickle.load(arquivo)

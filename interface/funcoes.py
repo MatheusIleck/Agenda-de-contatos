@@ -2,13 +2,20 @@ import pickle
 import re
 import os
     
+def cores(indice):
+    cores = {'primaria':'\033[1;35m',
+             'secundaria':'\033[;32m',
+             'terciario':'\033[;31m',
+             'quaternario':'\033[1;33m',
+             'limpa':'\033[m'}
+    return cores[indice]
 
 def linha(tam=60):
-    return print('-' * tam)
+    return print(cores("secundaria")+ '-' * tam)
 
 def cabecalho(txt):
     linha()
-    print(txt.center(60))
+    print(f'{cores("secundaria") + txt.center(60)}')
     linha()
 
 def menu():
@@ -40,7 +47,7 @@ def selecionar_submenu(resposta, menu):
 def leia_int(msg):
     while True:
         try:
-            número = int(input(msg))
+            número = int(input(cores("primaria") + msg))
         except ValueError:
             print('\033[0;31mErro, por favor digite um número válido. \033[m')
         except KeyboardInterrupt:
@@ -100,5 +107,3 @@ def selecionar_agendas():
     caminho_do_diretorio = 'lista_de_agendas'
     arquivos = os.listdir(caminho_do_diretorio)
     return arquivos
-
-    
