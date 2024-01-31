@@ -1,7 +1,7 @@
 import pickle
 import re
 
-from interface.funcoes import cabecalho, linha, sanitizar_nome, sanitizar_numero
+from interface.funcoes import cabecalho, linha, sanitizar_nome, sanitizar_numero, cores
 
 
 class Agenda():
@@ -42,16 +42,16 @@ class Agenda():
         
         if isinstance(lista, list) and len(lista) > 0:
             for i, contato in enumerate(lista):
-                print(f'\033[1;32m{i}- Nome:\033[m {contato}')
+                print(f'{cores("amarelo")}{i} - Nome: {cores("verde") + contato["nome"]:<30} {cores("amarelo")}Número: {cores("verde") + contato["numero"]:>3}')
                 i+= 1  
         else:
-             print(f'\033[;31mVocê não tem contatos.\033[m')
+             print(cores("vermelho") + 'Você não tem contatos.')
              
     def editar_contatos(self, index_contato, contato_escolhido, contatos):
         contatos[index_contato]["nome"] = contato_escolhido["nome"]
         contatos[index_contato]["numero"] = contato_escolhido["numero"]
         self.contatos = contatos
-        print(f'\033[;32mContato Atualizado.\033[m')
+        print(cores("verde") + 'Contato Atualizado.')
         
         return self.contatos
                            

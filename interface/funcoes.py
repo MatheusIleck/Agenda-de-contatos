@@ -3,19 +3,19 @@ import re
 import os
     
 def cores(indice):
-    cores = {'primaria':'\033[1;35m',
-             'secundaria':'\033[;32m',
-             'terciario':'\033[;31m',
-             'quaternario':'\033[1;33m',
-             'limpa':'\033[m'}
+    cores = {'roxo':'\033[1;35m',
+             'verde':'\033[;32m',
+             'vermelho':'\033[;31m',
+             'amarelo':'\033[1;33m',
+             'limpa':''}
     return cores[indice]
 
 def linha(tam=60):
-    return print(cores("secundaria")+ '-' * tam)
+    return print(cores("verde")+ '-' * tam)
 
 def cabecalho(txt):
     linha()
-    print(f'{cores("secundaria") + txt.center(60)}')
+    print(f'{cores("verde") + txt.center(60)}')
     linha()
 
 def menu():
@@ -41,17 +41,20 @@ def menu():
     return menu
 
 def selecionar_submenu(resposta, menu):
-    novo_menu = menu[resposta - 1].get('sub_comandos')
-    return novo_menu
+    try:
+        novo_menu = menu[resposta - 1].get('sub_comandos')
+        return novo_menu
+    except IndexError:
+        print(cores("vermelho") + 'Por favor digite um valor válido')
     
 def leia_int(msg):
     while True:
         try:
-            número = int(input(cores("primaria") + msg))
+            número = int(input(cores("roxo") + msg))
         except ValueError:
-            print('\033[0;31mErro, por favor digite um número válido. \033[m')
+            print(cores("vermelho") + 'Erro, por favor digite um número válido.')
         except KeyboardInterrupt:
-            print("\033[;32mSaindo...\033[m")
+            print(cores("verde") + 'Saindo...')
             exit()
         else:
             return número
@@ -62,7 +65,7 @@ def sanitizar_nome(msg):
     nome = str(input(msg))
     
     while not padrao_nome.match(nome):
-        print('\033[;31mERRO: Dados inválidos\033[m')
+        print(cores("vermelho") + 'ERRO:Dados inválidos')
         nome = str(input('Digite o Nome: '))
     else:
         return nome
@@ -70,7 +73,7 @@ def sanitizar_numero(msg):
     padrao_numero = re.compile(r"[0-9]{11}$")
     numero = str(input(msg))
     while not padrao_numero.match(numero):
-        print('\033[;31mERRO: Dados invalidos\033[m')
+        print(cores("vermelho") + 'ERRO:Dados invalidos')
         numero = str(input('Digite o Número: '))
     else:
         return numero
@@ -91,7 +94,7 @@ def criar_agenda(nova_agenda):
             caminho_do_arquivo = os.path.join(caminho, nova_agenda)
             
             if os.path.isfile(caminho_do_arquivo):
-                print(f'\033[;31mErro: Ja existe uma agenda com esse nome!\033[m')
+                print(fcores("vermelho") + 'ERRO:Ja existe uma agenda com esse nome!')
                 pass
             
             #abre o arquivo em modo de escrita
@@ -101,7 +104,7 @@ def criar_agenda(nova_agenda):
                 
         except OSError:
             linha()
-            print(f'\033[;31mErro: Por favor digite o nome do arquivo sem caracteres especiais ou espaços!\033[m')
+            print(fcores("vermelho") + 'ERRO:Por favor digite o nome do arquivo sem caracteres especiais ou espaços!')
 
 def selecionar_agendas():
     caminho_do_diretorio = 'lista_de_agendas'
