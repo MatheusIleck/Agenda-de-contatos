@@ -61,11 +61,11 @@ def leia_int(msg):
         
 def sanitizar_nome(msg):
     
-    padrao_nome = re.compile(r"^[A-Za-z]+(?:[^\S\r\n]+[A-Za-z]+)*$")
+    padrao_nome = re.compile(r"^[A-Za-z0-9]+(?:[^\S\r\n]+[A-Za-z]+)*$")
     nome = str(input(msg))
     
     while not padrao_nome.match(nome):
-        print(cores("vermelho") + 'ERRO:Dados inválidos')
+        print(cores("vermelho") + 'ERRO:Dados inválidos' + cores("limpa"))
         nome = str(input('Digite o Nome: '))
     else:
         return nome
@@ -73,7 +73,7 @@ def sanitizar_numero(msg):
     padrao_numero = re.compile(r"[0-9]{11}$")
     numero = str(input(msg))
     while not padrao_numero.match(numero):
-        print(cores("vermelho") + 'ERRO:Dados invalidos')
+        print(cores("vermelho") + 'ERRO:Dados invalidos' + cores("limpa"))
         numero = str(input('Digite o Número: '))
     else:
         return numero
@@ -94,7 +94,7 @@ def criar_agenda(nova_agenda):
             caminho_do_arquivo = os.path.join(caminho, nova_agenda)
             
             if os.path.isfile(caminho_do_arquivo):
-                print(cores("vermelho") + 'ERRO:Ja existe uma agenda com esse nome!')
+                print(cores("vermelho") + 'ERRO:Ja existe uma agenda com esse nome!' + cores("limpa"))
                 pass
             
             #abre o arquivo em modo de escrita

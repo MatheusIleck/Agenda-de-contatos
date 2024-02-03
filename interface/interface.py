@@ -43,7 +43,7 @@ class Interface():
                 
                 return 'agendas listadas'
             else:
-                print(cores("vermelho") + 'Você não tem agendas.')
+                print(cores("vermelho") + 'Você não tem agendas.' + cores("limpa"))
                 return 'sem agendas'
 
         elif resposta == 3:
@@ -112,11 +112,11 @@ class Interface():
                         return 'Por favor digite um valor valido'
                     
             else:
-                print(cores("vermelho") + 'Você não tem agendas')
+                print(cores("vermelho") + 'Você não tem agendas' + cores("limpa"))
                 return 'agenda não selecionada'
 
         except (IndexError):
-            print('Por favor digite um valor válido')
+            print('Por favor digite um valor válido' )
             
         while agenda_selecionada:   
             
@@ -129,47 +129,50 @@ class Interface():
                     contatos_existentes = agenda.verificar_agenda(agenda_selecionada)
                     contatos_existentes.extend(lista_contatos)
                     agenda.salvar_contatos(agenda_selecionada, contatos_existentes)
-                    print(cores("verde") + 'Contato Adicionado.')
+                    print(cores("verde") + 'Contato Adicionado.' + cores("limpa"))
                     
                     return agenda_selecionada
 
                 #EDITAR CONTATO
                 elif resposta_submenu == 2: 
-                    #exibe os contatos                    
-                    agenda.exibir_contatos(agenda_selecionada)
-                    
-                    #pega a lista de contatos
-                    contatos = agenda.pegar_contatos(agenda_selecionada)
-                    
-                    #verifica se existe items na lista
-                    
-                    if  len(contatos) > 0:
-                        linha()
+                    try:
+                        #exibe os contatos                    
+                        agenda.exibir_contatos(agenda_selecionada)
                         
-                        #pergunta ao usuario qual contato ele deseja editar
-                        index_contato = int(input('Qual o index do contato você deseja editar?'))
+                        #pega a lista de contatos
+                        contatos = agenda.pegar_contatos(agenda_selecionada)
                         
-                        #recebe o contato escolhido
-                        contato_escolhido = contatos[index_contato]
-                    
-                        #verifica se existe o usuario na lista de contatos
-                        if contato_escolhido in contatos:
-                            escolher_campo_edicao_contato = int(input('O que você deseja editar? (0 para editar o nome e 1 para editar o número): '))
-                            if escolher_campo_edicao_contato == 0:
-                                contato_escolhido["nome"] = sanitizar_nome('Digite o Nome: ')
+                        #verifica se existe items na lista
+                        
+                        if  len(contatos) > 0:
+                            linha()
+                            
+                            #pergunta ao usuario qual contato ele deseja editar
+                            index_contato = int(input('Qual o index do contato você deseja editar?'))
+                            
+                            #recebe o contato escolhido
+                            contato_escolhido = contatos[index_contato]
+                        
+                            #verifica se existe o usuario na lista de contatos
+                            if contato_escolhido in contatos:
+                                escolher_campo_edicao_contato = int(input('O que você deseja editar? (0 para editar o nome e 1 para editar o número): '))
+                                if escolher_campo_edicao_contato == 0:
+                                    contato_escolhido["nome"] = sanitizar_nome('Digite o Nome: ')
+                                        
                                     
-                                
-                            elif escolher_campo_edicao_contato == 1:
-                                contato_escolhido["numero"] = sanitizar_numero('Digite o Número: ')
+                                elif escolher_campo_edicao_contato == 1:
+                                    contato_escolhido["numero"] = sanitizar_numero('Digite o Número: ')
+                                        
+                                else:
+                                    print(cores("vermelho") + 'ERRO:Por favor digite um valor válido.' + cores("limpa"))  
                                     
-                            else:
-                                print(cores("vermelho") + 'ERRO:Por favor digite um digito válido.')  
-                                
-                            contatos_atualizados = agenda.editar_contatos(index_contato, contato_escolhido, contatos)
-                            agenda.salvar_contatos(agenda_selecionada, contatos_atualizados)
+                                contatos_atualizados = agenda.editar_contatos(index_contato, contato_escolhido, contatos)
+                                agenda.salvar_contatos(agenda_selecionada, contatos_atualizados)
+                                return agenda_selecionada
+                        else:
                             return agenda_selecionada
-                    else:
-                        return agenda_selecionada
+                    except:
+                        print(cores("vermelho") + 'ERRO: Por favor digite um valor válido.' + cores("limpa"))
                     
                 elif resposta_submenu == 3:
                     contatos = agenda.verificar_agenda(agenda_selecionada)
@@ -181,7 +184,7 @@ class Interface():
                         return agenda_selecionada
                         break
                     else:
-                        print(cores("vermelho") + 'Você não tem contatos')
+                        print(cores("vermelho") + 'Você não tem contatos' + cores("limpa"))
                         return agenda_selecionada
                 elif resposta_submenu == 4:
                     agenda.exibir_contatos(agenda_selecionada)
