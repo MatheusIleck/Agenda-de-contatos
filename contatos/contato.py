@@ -27,7 +27,7 @@ class Contato():
                 
                 continuar = input("Deseja adicionar outro contato? ").upper()
                 while continuar not in 'SsNn':
-                    continuar = str(input('Por favor digite um digito válido: ')).upper()
+                    continuar = str(input(cores("erro") + 'Por favor digite um digito válido: ')).upper()
                     
                 if continuar in 'N' or continuar == "NAO":
                     return contatos     

@@ -66,7 +66,7 @@ def sanitizar_nome(msg):
     
     while not padrao_nome.match(nome):
         print(cores("vermelho") + 'ERRO:Dados inválidos' + cores("limpa"))
-        nome = str(input(cores("roxo") + 'Digite o Nome: '))
+        nome = str(input(cores("verde") + 'Digite o Nome: '))
     else:
         return nome
 def sanitizar_numero(msg):
@@ -74,7 +74,7 @@ def sanitizar_numero(msg):
     numero = str(input(msg))
     while not padrao_numero.match(numero):
         print(cores("vermelho") + 'ERRO:Dados invalidos' + cores("limpa"))
-        numero = str(input(cores("roxo") +'Digite o Número com o DDD: (xxxxxxxxxxx) '))
+        numero = str(input(cores("verde") +'Digite o Número com o DDD (xxxxxxxxxxx): '))
     else:
         return numero
          
