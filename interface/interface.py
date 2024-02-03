@@ -31,8 +31,8 @@ class Interface():
         if resposta == 1:
             linha()
             nova_agenda = str(input('Digite o nome da agenda que deseja criar: ')).strip()
-            while not nova_agenda.isalpha():
-                nova_agenda = str(input('Digite um nome valido: ')).strip()
+            while not nova_agenda.isalnum():
+                nova_agenda = str(input(cores("vermelho")+'Digite um nome valido: ')).strip()
             nova_agenda += '.pkl'
             criar_agenda(nova_agenda)
             agenda.salvar_contatos(nova_agenda)
@@ -87,7 +87,7 @@ class Interface():
                         
                         if selecionar_agenda in diretorio_agendas:
                             novo_nome_agenda = str(input('Digite o novo nome da agenda: ')).strip()
-                            while  not novo_nome_agenda.isalpha():
+                            while  not novo_nome_agenda.isalnum():
                                 novo_nome_agenda = str(input('Digite um nome valido: ')).strip()
                             novo_nome_agenda += '.pkl'
                             
