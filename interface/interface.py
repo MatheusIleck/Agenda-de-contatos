@@ -51,7 +51,7 @@ class Interface():
             quit() 
         else:
             linha()
-            print(cores("vermelho") + 'ERRO:Por favor digite um valor válido.')
+            print(cores("vermelho") + 'ERRO:Por favor digite um valor válido.' + cores("limpa"))
         
     def executar_comando_submenu(situacao_atual, resposta_submenu, agenda_selecionada, entrar_na_agenda):
         try:
@@ -72,6 +72,9 @@ class Interface():
                         if selecionar_agenda in diretorio_agendas:
                             situacao_atual = 'agenda selecionada'
                             return selecionar_agenda
+                        else:
+                            print(cores("vermelho") + 'ERRO:Por favor digite um valor válido.' + cores("limpa"))
+                            
                                
                     elif resposta_submenu == 2:
                         Interface.exibir_agendas()
@@ -82,7 +85,10 @@ class Interface():
                             novo_nome_agenda = str(input('Digite o novo nome da agenda: ')) + '.pkl'
                             os.rename("lista_de_agendas/" + selecionar_agenda, "lista_de_agendas/" +novo_nome_agenda)  
                             linha()
-                        
+                        else:
+                            print(cores("vermelho") + 'ERRO:Por favor digite um valor válido.' + cores("limpa"))
+                            return ''
+                            
                         agenda_selecionada = False
                         return 'agenda não selecionada'
                         
@@ -94,9 +100,12 @@ class Interface():
                         if lista_de_agenda:
                             try:
                                 selecionar_agenda = str(input('Digite o nome da agenda que deseja remover: ')) + '.pkl'
-                                os.unlink(caminho_do_diretorio + selecionar_agenda)
-                                print(f'\033[0;32mAgenda removida!')
-                                return ''
+                                if os.unlink(caminho_do_diretorio + selecionar_agenda):
+                                    print(f'\033[0;32mAgenda removida!')
+                                    return ''
+                                else:
+                                    print(cores("vermelho") + 'ERRO:Por favor digite um valor válido.' + cores("limpa"))
+
                             except FileNotFoundError:
                                 print('Essa agenda não existe.')
                             
