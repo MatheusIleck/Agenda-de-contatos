@@ -101,11 +101,8 @@ class Interface():
                         if lista_de_agenda:
                             try:
                                 selecionar_agenda = str(input('Digite o nome da agenda que deseja remover: ')) + '.pkl'
-                                os.unlink(caminho_do_diretorio + selecionar_agenda):
-                                print(cores("verde")'Agenda removida!')
-                                return ''
-                        else:
-                            print(cores("vermelho") + 'ERRO:Por favor digite um valor válido.' + cores("limpa"))
+                                os.unlink(caminho_do_diretorio + selecionar_agenda)
+                                print(cores("verde") + 'Agenda removida!')
                                 return ''
                                     
 
