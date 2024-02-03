@@ -33,6 +33,7 @@ class Agenda():
         else:
             with open(caminho + agenda_selecionada, 'wb') as arquivo:
                     pickle.dump(self.contatos, arquivo)
+        self.contatos = []
 
     def exibir_contatos(self, agenda_atual):
         caminho = "lista_de_agendas/"
@@ -56,9 +57,12 @@ class Agenda():
         return self.contatos
                            
     def remover_contatos(self, contatos_existentes, index_contato):
-        contatos_existentes.pop(index_contato)
-        self.contatos = contatos_existentes
-        return self.contatos
+        try:
+            contatos_existentes.pop(index_contato)
+            self.contatos = contatos_existentes
+            return self.contatos
+        except IndexError:
+            print(cores("vermelho") + 'Por favor digite um número válido')
             
     def pegar_contatos(self, agenda_atual):
          with open("lista_de_agendas/" + agenda_atual , 'rb') as arquivo:

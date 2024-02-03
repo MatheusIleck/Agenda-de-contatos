@@ -5,16 +5,16 @@ from time import sleep
 
 nova_interface = Interface
 menu = menu()
+
 while True:
    cabecalho('Bem-vindo ao menu de Agendas')
    #mostra o menu principal
-   sleep(0.5)
    nova_interface.mostrar_menu(menu)
    linha()
    
    #resposta do usuario no menu principal
    resposta = leia_int(f'{cores("roxo")}Digite a opção:')
-   sleep(0.6)
+   sleep(0.2)
 
    
    #executa o comando da interface
@@ -26,7 +26,7 @@ while True:
    #se existir um submenu:
    while acao_interface == 'agendas listadas' and submenu:
       cabecalho('Selecione uma opção')
-      sleep(0.5)
+      sleep(0.2)
       
       #pega o nome do submenu
       situacao_atual = menu[resposta - 1]['comando_principal']
@@ -39,7 +39,7 @@ while True:
       #recebe o valor do usuario
       agenda_selecionada = ''
       resposta_submenu = leia_int(f'Digite a opção:')
-      sleep(0.6)
+      sleep(0.2)
       agenda_selecionada = nova_interface.executar_comando_submenu(situacao_atual, resposta_submenu, agenda_selecionada, entrar_na_agenda)
       
       if agenda_selecionada == 'agenda não selecionada':
@@ -49,7 +49,7 @@ while True:
       
       nova_interface.exibir_agendas()
       while agenda_selecionada.endswith(".pkl"):
-         sleep(0.5)
+         sleep(0.2)
          
          entrar_na_agenda = False
          cabecalho('Agenda selecionada: ' + agenda_selecionada)

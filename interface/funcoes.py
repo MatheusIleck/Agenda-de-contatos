@@ -94,7 +94,7 @@ def criar_agenda(nova_agenda):
             caminho_do_arquivo = os.path.join(caminho, nova_agenda)
             
             if os.path.isfile(caminho_do_arquivo):
-                print(fcores("vermelho") + 'ERRO:Ja existe uma agenda com esse nome!')
+                print(cores("vermelho") + 'ERRO:Ja existe uma agenda com esse nome!')
                 pass
             
             #abre o arquivo em modo de escrita
@@ -104,7 +104,7 @@ def criar_agenda(nova_agenda):
                 
         except OSError:
             linha()
-            print(fcores("vermelho") + 'ERRO:Por favor digite o nome do arquivo sem caracteres especiais ou espaços!')
+            print(cores("vermelho") + 'ERRO:Por favor digite o nome do arquivo sem caracteres especiais ou espaços!')
 
 def selecionar_agendas():
     caminho_do_diretorio = 'lista_de_agendas'

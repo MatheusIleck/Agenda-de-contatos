@@ -1,8 +1,7 @@
 import re
 
 from agenda.agenda import Agenda
-from interface.funcoes import sanitizar_nome
-from interface.funcoes import sanitizar_numero
+from interface.funcoes import sanitizar_nome, sanitizar_numero, cores
 
 
 class Contato():
@@ -16,8 +15,8 @@ class Contato():
             contatos = list()
             while True:
                 #Pega os dados do novo contato e salva dentro de uma instancia
-                nome = sanitizar_nome('Digite o nome: ')
-                numero = sanitizar_numero('Digite o Numero: ')
+                nome = sanitizar_nome(cores("roxo") + 'Digite o nome: ')
+                numero = sanitizar_numero(cores("roxo") + 'Digite o Numero: ')
                 novo_contato = Contato(nome, numero)
                 
                 #Pega os valores com dicionario e adiciona em uma lista
