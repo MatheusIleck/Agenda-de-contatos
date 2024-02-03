@@ -16,7 +16,7 @@ class Contato():
             while True:
                 #Pega os dados do novo contato e salva dentro de uma instancia
                 nome = sanitizar_nome(cores("roxo") + 'Digite o nome: ')
-                numero = sanitizar_numero(cores("roxo") + 'Digite o Numero: ')
+                numero = sanitizar_numero(cores("roxo") + 'Digite o Número com o DDD: (xxxxxxxxxxx) ')
                 novo_contato = Contato(nome, numero)
                 
                 #Pega os valores com dicionario e adiciona em uma lista
@@ -30,9 +30,7 @@ class Contato():
                     continuar = str(input('Por favor digite um digito válido: ')).upper()
                     
                 if continuar in 'N' or continuar == "NAO":
-                    return contatos
-                    break
-                    
+                    return contatos     
         
                     
 

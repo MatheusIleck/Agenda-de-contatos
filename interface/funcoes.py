@@ -74,7 +74,7 @@ def sanitizar_numero(msg):
     numero = str(input(msg))
     while not padrao_numero.match(numero):
         print(cores("vermelho") + 'ERRO:Dados invalidos' + cores("limpa"))
-        numero = str(input('Digite o Número: '))
+        numero = str(input('Digite o Número com o DDD: (xxxxxxxxxxx) '))
     else:
         return numero
          

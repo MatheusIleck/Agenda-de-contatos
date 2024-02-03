@@ -30,7 +30,10 @@ class Interface():
     def executar_comando(resposta):
         if resposta == 1:
             linha()
-            nova_agenda = str(input('Digite o nome da agenda que deseja criar: ')) + '.pkl'
+            nova_agenda = str(input('Digite o nome da agenda que deseja criar: '))
+            while nova_agenda == '':
+                nova_agenda = str(input('Digite um nome valido: '))
+            nova_agenda += '.pkl'
             criar_agenda(nova_agenda)
             agenda.salvar_contatos(nova_agenda)
             nova_agenda = agenda.verificar_agenda(nova_agenda)
@@ -86,6 +89,7 @@ class Interface():
                             novo_nome_agenda = str(input('Digite o novo nome da agenda: ')) + '.pkl'
                             os.rename("lista_de_agendas/" + selecionar_agenda, "lista_de_agendas/" +novo_nome_agenda)  
                             linha()
+                            print(cores("verde") + 'Agenda atualizada!')
                             return ''
                             
                         else:
