@@ -73,7 +73,8 @@ class Interface():
                             situacao_atual = 'agenda selecionada'
                             return selecionar_agenda
                         else:
-                            print(cores("vermelho") + 'ERRO:Por favor digite um valor válido.' + cores("limpa"))
+                            print(cores("vermelho") + 'ERRO:Por favor digite um valor válido.' )
+                            return ''
                             
                                
                     elif resposta_submenu == 2:
@@ -107,7 +108,7 @@ class Interface():
                                     print(cores("vermelho") + 'ERRO:Por favor digite um valor válido.' + cores("limpa"))
 
                             except FileNotFoundError:
-                                print('Essa agenda não existe.')
+                                print(cores("vermelho") + 'Essa agenda não existe.'+ cores("vermelho"))
                             
                         else:
                             linha()
