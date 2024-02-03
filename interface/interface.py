@@ -81,24 +81,27 @@ class Interface():
                             
                                
                     elif resposta_submenu == 2:
-                        Interface.exibir_agendas()
-                        linha()
-                        selecionar_agenda = str(input('Digite o nome da agenda que deseja editar: ')) + '.pkl'
-                        
-                        if selecionar_agenda in diretorio_agendas:
-                            novo_nome_agenda = str(input('Digite o novo nome da agenda: ')).strip()
-                            while  not novo_nome_agenda.isalnum():
-                                novo_nome_agenda = str(input('Digite um nome valido: ')).strip()
-                            novo_nome_agenda += '.pkl'
-                            
-                            os.rename("lista_de_agendas/" + selecionar_agenda, "lista_de_agendas/" +novo_nome_agenda)  
+                        try:
+                            Interface.exibir_agendas()
                             linha()
-                            print(cores("verde") + 'Agenda atualizada!')
-                            return ''
+                            selecionar_agenda = str(input('Digite o nome da agenda que deseja editar: ')) + '.pkl'
                             
-                        else:
-                            print(cores("vermelho") + 'ERRO:Por favor digite um valor válido.' + cores("limpa"))
-                            return ''
+                            if selecionar_agenda in diretorio_agendas:
+                                novo_nome_agenda = str(input('Digite o novo nome da agenda: ')).strip()
+                                while  not novo_nome_agenda.isalnum():
+                                    novo_nome_agenda = str(input(cores("vermelho") + 'Digite um nome valido: ')).strip()
+                                novo_nome_agenda += '.pkl'
+                                
+                                os.rename("lista_de_agendas/" + selecionar_agenda, "lista_de_agendas/" +novo_nome_agenda)  
+                                linha()
+                                print(cores("verde") + 'Agenda atualizada!')
+                                return ''
+                                
+                            else:
+                                print(cores("vermelho") + 'ERRO:Por favor digite um valor válido.' + cores("limpa"))
+                                return ''
+                        except FileExistsError:
+                            print(cores("vermelho")+'O arquivo ja existe')
                     
                         
                     elif resposta_submenu == 3:
