@@ -92,6 +92,9 @@ class Interface():
                                     novo_nome_agenda = str(input(cores("vermelho") + 'Digite um nome valido: ')).strip()
                                 novo_nome_agenda += '.pkl'
                                 
+                                while os.path.isfile("lista_de_agendas/"+novo_nome_agenda):
+                                    novo_nome_agenda = str(input(cores("vermelho") + 'Existe uma agenda com esse nome, por favor digite outro nome: ')).strip() + '.pkl'
+                                    
                                 os.rename("lista_de_agendas/" + selecionar_agenda, "lista_de_agendas/" +novo_nome_agenda)  
                                 linha()
                                 print(cores("verde") + 'Agenda atualizada!')
@@ -101,7 +104,7 @@ class Interface():
                                 print(cores("vermelho") + 'ERRO:Por favor digite um valor válido.' + cores("limpa"))
                                 return ''
                         except FileExistsError:
-                            print(cores("vermelho")+'O arquivo ja existe')
+                            print(cores("vermelho")+'Ja existe uma agenda com esse nome.')
                     
                         
                     elif resposta_submenu == 3:
