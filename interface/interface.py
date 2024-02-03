@@ -88,7 +88,9 @@ class Interface():
                         if selecionar_agenda in diretorio_agendas:
                             novo_nome_agenda = str(input('Digite o novo nome da agenda: ')).strip()
                             while novo_nome_agenda == '':
-                                novo_nome_agenda = str(input('Digite um nome valido: ')).strip() + '.pkl'
+                                novo_nome_agenda = str(input('Digite um nome valido: ')).strip()
+                            novo_nome_agenda += '.pkl'
+                            
                             os.rename("lista_de_agendas/" + selecionar_agenda, "lista_de_agendas/" +novo_nome_agenda)  
                             linha()
                             print(cores("verde") + 'Agenda atualizada!')
