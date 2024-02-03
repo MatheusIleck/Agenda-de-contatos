@@ -86,12 +86,12 @@ class Interface():
                             novo_nome_agenda = str(input('Digite o novo nome da agenda: ')) + '.pkl'
                             os.rename("lista_de_agendas/" + selecionar_agenda, "lista_de_agendas/" +novo_nome_agenda)  
                             linha()
+                            return ''
+                            
                         else:
                             print(cores("vermelho") + 'ERRO:Por favor digite um valor válido.' + cores("limpa"))
                             return ''
-                            
-                        agenda_selecionada = False
-                        return 'agenda não selecionada'
+                    
                         
                     elif resposta_submenu == 3:
                         
