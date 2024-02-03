@@ -7,7 +7,7 @@ def cores(indice):
              'verde':'\033[;32m',
              'vermelho':'\033[;31m',
              'amarelo':'\033[1;33m',
-             'limpa':''}
+             'limpa':'\033[m'}
     return cores[indice]
 
 def linha(tam=60):
@@ -104,7 +104,7 @@ def criar_agenda(nova_agenda):
                 
         except OSError:
             linha()
-            print(cores("vermelho") + 'ERRO:Por favor digite o nome do arquivo sem caracteres especiais ou espaços!')
+            print(cores("vermelho") + 'ERRO:Por favor digite o nome do arquivo sem caracteres especiais ou espaços!' + cores("limpa"))
 
 def selecionar_agendas():
     caminho_do_diretorio = 'lista_de_agendas'

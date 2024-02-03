@@ -40,7 +40,7 @@ class Interface():
         elif resposta == 2:
             lista_de_agenda = glob.glob("./lista_de_agendas/*.pkl")
             if lista_de_agenda:
-                Interface.exibir_agendas()
+                
                 return 'agendas listadas'
             else:
                 print(cores("vermelho") + 'Você não tem agendas.')
@@ -59,9 +59,10 @@ class Interface():
             diretorio_agendas = selecionar_agendas()
             if len(diretorio_agendas) > 0:
                 #enquanto situação atual estiver em "listar agendas existentes"
-                while entrar_na_agenda:
-                    
+                
+                while entrar_na_agenda:                    
                     #Se a resposta do usuario é igual a 1
+                    
                     if resposta_submenu == 1:
                     
                         #pede o nome da agenda ao usuario  
@@ -73,6 +74,7 @@ class Interface():
                             return selecionar_agenda
                                
                     elif resposta_submenu == 2:
+                        Interface.exibir_agendas()
                         linha()
                         selecionar_agenda = str(input('Digite o nome da agenda que deseja editar: ')) + '.pkl'
                         
@@ -145,7 +147,7 @@ class Interface():
                         linha()
                         
                         #pergunta ao usuario qual contato ele deseja editar
-                        index_contato = int(input('Qual contato você deseja editar?'))
+                        index_contato = int(input('Qual o index do contato você deseja editar?'))
                         
                         #recebe o contato escolhido
                         contato_escolhido = contatos[index_contato]
@@ -161,7 +163,7 @@ class Interface():
                                 contato_escolhido["numero"] = sanitizar_numero('Digite o Número: ')
                                     
                             else:
-                                print(cores("vermelho") + 'ERRO:Por favor digite um valor válido.')  
+                                print(cores("vermelho") + 'ERRO:Por favor digite um digito válido.')  
                                 
                             contatos_atualizados = agenda.editar_contatos(index_contato, contato_escolhido, contatos)
                             agenda.salvar_contatos(agenda_selecionada, contatos_atualizados)

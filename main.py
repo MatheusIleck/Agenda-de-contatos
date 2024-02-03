@@ -25,8 +25,8 @@ while True:
    
    #se existir um submenu:
    while acao_interface == 'agendas listadas' and submenu:
-      cabecalho('Selecione uma opção')
       sleep(0.2)
+      Interface.exibir_agendas()
       
       #pega o nome do submenu
       situacao_atual = menu[resposta - 1]['comando_principal']
@@ -47,7 +47,6 @@ while True:
          break
       novo_submenu = selecionar_submenu(resposta_submenu, submenu)
       
-      nova_interface.exibir_agendas()
       while agenda_selecionada.endswith(".pkl"):
          sleep(0.2)
          
